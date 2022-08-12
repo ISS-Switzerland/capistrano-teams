@@ -68,6 +68,12 @@ posted to, you need to edit the stage file and set the following:
 set :teams_suppress_events, true # Default value: false
 ```
 
+By default if network issue with connection to Microsoft Teams during sending notifications occurs whole deployment process will crash.
+To ignore network issue and continue without teams notification you need to edit the stage or main deploy.rb file and set the following:
+```ruby
+set :ignore_network_issue, true # Default value: false
+```
+
 #### Automated notifications
 After setting the minimum options needed for your application, the plugin will push notifications to 
 the teams room where the webhook was created for all the deploy events. Listed below you can see the
@@ -178,6 +184,7 @@ set :teams_card_message_markdown, true
 set :teams_webhook_url, "https://outlook.office.com/webhook/{groupId}@{tenantId}/IncomingWebhook/{connectorId}/{webHookId}"
 
 set :teams_suppress_events, false # Default value: false
+set :ignore_network_issue, false # Default value: false
 set :teams_message_type, Message::TYPE_BASIC # Message::TYPE_BASIC or Message::TYPE_CARD
 set :teams_http_options, verify_mode: OpenSSL::SSL::VERIFY_PEER # Default verify mode
 

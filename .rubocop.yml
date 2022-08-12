@@ -1,5 +1,13 @@
 # This is the configuration used to check the capistrano-graphite source code.
 inherit_from: .rubocop_todo.yml
 
+AllCops:
+  TargetRubyVersion: 2.0.0
+
 Style/Encoding:
   Enabled: true
+Style/RescueStandardError:
+  EnforcedStyle: implicit
+Metrics/AbcSize:
+  Exclude:
+    - "lib/capistrano/teams/web_hook.rb"

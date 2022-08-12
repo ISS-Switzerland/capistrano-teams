@@ -37,6 +37,14 @@ module Capistrano
         Net::HTTP.start(uri.host, uri.port, opts) do |http|
           http.request(request)
         end
+      rescue => e
+        fetch(:ignore_network_issue) ? print_err_message : raise(e)
+      end
+
+      private
+
+      def print_err_message
+        p 'Can\'t send notification to teams, continue without notification.'
       end
     end
   end

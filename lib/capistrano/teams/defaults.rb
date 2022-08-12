@@ -2,6 +2,7 @@
 
 # set :teams_webhook_url,  "url"
 set :teams_suppress_events, false
+set :ignore_network_issue, false
 set :teams_message_type, Message::TYPE_BASIC # Message::TYPE_BASIC or Message::TYPE_CARD
 set :teams_http_options, verify_mode: OpenSSL::SSL::VERIFY_PEER
 
