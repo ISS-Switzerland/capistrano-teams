@@ -1,12 +1,9 @@
 # Capistrano::Teams
 
-[![Gem Downloads](http://img.shields.io/gem/dt/capistrano-teams.svg)](https://rubygems.org/gems/capistrano-teams)
-[![GitHub](https://img.shields.io/github/license/danieltoader/capistrano-teams?color=113399)](https://github.com/danieltoader/capistrano-teams/blob/master/LICENSE.md)
-[![Changelog](https://img.shields.io/badge/log-capistrano--teams-E05735)](https://github.com/danieltoader/capistrano-teams/blob/master/CHANGELOG.md)
-[![Gem Version](http://img.shields.io/gem/v/capistrano-teams.svg)](https://rubygems.org/gems/capistrano-teams)
-[![Build Status](https://app.travis-ci.com/danieltoader/capistrano-teams.svg?branch=master)](https://app.travis-ci.com/github/danieltoader/capistrano-teams)
-[![Build status](https://ci.appveyor.com/api/projects/status/8e9dteu7ibxsb4ou?svg=true)](https://ci.appveyor.com/project/danieltoader/capistrano-teams)
-[![Coverage Status](https://img.shields.io/coveralls/danieltoader/capistrano-teams.svg)](https://coveralls.io/r/danieltoader/capistrano-teams?branch=master)
+## Forked version
+Forked version of the gem is named iss-capistrano-teams
+
+## About
 
 This gem extends Capistrano functionality to push notices to Microsoft Teams via an incoming webhook.
 
