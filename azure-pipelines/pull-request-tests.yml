@@ -1,0 +1,55 @@
+trigger: none
+pr:
+  branches:
+    include:
+      - '*'
+
+resources:
+  repositories:
+    - repository: SharedTemplates
+      type: git
+      name: 'Infrastructure/iss-shared-terraform'
+      ref: refs/tags/2024.08.22
+
+variables:
+  - group: terraform
+  - name: gemspecName
+    value: 'iss-capistrano-teams'
+  - name: gemVersion
+    value: '1.0.2'
+
+pool: $(selfHostedAgentPool)
+
+steps:
+  - checkout: self
+    
+  - template: /azure-pipelines/templates/prepare-gemspec.yml
+    parameters:
+      gemspecName: 'iss-capistrano-teams'
+      gemVersion: '1.0.2'
+      inlineScript: |
+        rm -f capistrano-teams.gemspec
+  
+  # wew, swiss2fms, valet, permit, hrhub, vetting,fleetscope
+  - template: tasks/ruby-run-rspec-and-publish-results.yaml@SharedTemplates
+    parameters:
+      rubyVersion: 2.7.5
+      bundlerVersion: 2.2.31
+  
+  # et3
+  - template: tasks/ruby-run-rspec-and-publish-results.yaml@SharedTemplates
+    parameters:
+      rubyVersion: 2.7.8
+      bundlerVersion: 2.3.10
+
+  # edc, infrascope
+  - template: tasks/ruby-run-rspec-and-publish-results.yaml@SharedTemplates
+    parameters:
+      rubyVersion: 3.1.2
+      bundlerVersion: 2.3.26
+  
+  # ubs2fm
+  - template: tasks/ruby-run-rspec-and-publish-results.yaml@SharedTemplates
+    parameters:
+      rubyVersion: 3.2.1
+      bundlerVersion: 2.4.10
