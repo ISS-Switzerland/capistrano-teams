@@ -1,0 +1,31 @@
+trigger: none
+pr: none
+
+resources:
+  repositories:
+    - repository: SharedTemplates
+      type: git
+      name: "Infrastructure/iss-shared-terraform"
+      ref: refs/tags/2024.08.22
+
+variables:
+  - group: terraform
+  - group: nexus
+
+parameters:
+  - name: GemVersion
+    displayName: GEM Version
+    type: string
+
+pool: $(selfHostedAgentPool)
+
+jobs:
+  - template: jobs/build_ruby_gem.yml@SharedTemplates
+    parameters:
+      gemVersion: ${{ parameters.GemVersion }}
+      gemspecName: iss-capistrano-teams
+      rubyVersion: 2.7.5
+      bundlerVersion: 2.2.31
+      nexusVersion: 1.5.2
+      inlineScript: |
+        rm -f capistrano-teams.gemspec
