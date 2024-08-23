@@ -13,7 +13,7 @@ variables:
   - group: terraform
   - group: snyk
   - name: snykProject
-    value: 'Tririga Connector'
+    value: 'Capistrano Teams'
 
 pool: $(selfHostedAgentPool)
 
