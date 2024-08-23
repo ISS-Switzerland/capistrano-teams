@@ -20,6 +20,13 @@ pool: $(selfHostedAgentPool)
 steps:
   - checkout: self
     
+  - template: /azure-pipelines/templates/prepare-gemspec.yml
+    parameters:
+      gemspecName: 'iss-capistrano-teams'
+      gemVersion: '1.0.2'
+      inlineScript: |
+        rm -f capistrano-teams.gemspec
+    
   - script: |
       docker run -a stdin -a stdout -a stderr -v $(System.DefaultWorkingDirectory):/usr/app ruby:2.7.5 /bin/bash -c 'cd /usr/app && gem install bundler -v 2.4.22 && bundle install'
     displayName: Install ruby packages
@@ -45,7 +52,7 @@ steps:
       snykProjects:
         - name: ${{ variables.snykProject }}
           path: ''
-          targetFile: 'Gemfile'
+          targetFile: 'Gemfile.lock'
           ${{ if eq(variables['build.sourceBranch'], 'master') }}:
             monitor: 'always'
           ${{ else }}:

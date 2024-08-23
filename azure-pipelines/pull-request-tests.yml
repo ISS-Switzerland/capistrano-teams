@@ -22,23 +22,13 @@ pool: $(selfHostedAgentPool)
 
 steps:
   - checkout: self
-  
-  - task: replacetokens@6
-    displayName: 'Replace tokens in ${{ variables.gemspecName }}.gemspec-pipeline'
-    inputs:
-      root: $(System.DefaultWorkingDirectory)
-      tokenPattern: azpipelines
-      sources: '${{ variables.gemspecName }}.gemspec-pipeline'
-      ifNoFilesFound: error
-      logLevel: warn
-      missingVarLog: error
-      additionalVariables: |
-        package_version: "${{ variables.gemVersion }}"
-
-  - script: |
-      mv ${{ variables.gemspecName }}.gemspec-pipeline ${{ variables.gemspecName }}.gemspec
-      rm -f capistrano-teams.gemspec
-    displayName: Prepare gemspec
+    
+  - template: /azure-pipelines/templates/prepare-gemspec.yml
+    parameters:
+      gemspecName: 'iss-capistrano-teams'
+      gemVersion: '1.0.2'
+      inlineScript: |
+        rm -f capistrano-teams.gemspec
   
   # wew, swiss2fms, valet, permit, hrhub, vetting,fleetscope
   - template: tasks/ruby-run-rspec-and-publish-results.yaml@SharedTemplates

@@ -1,0 +1,31 @@
+﻿parameters:
+  - name: gemspecName
+    type: string
+  - name: gemVersion
+    type: string
+  - name: inlineScript
+    type: string
+    default: ""
+  - name: workingDirectory
+    type: string
+    default: $(System.DefaultWorkingDirectory)
+
+
+steps:
+  - task: replacetokens@6
+    displayName: 'Replace tokens in ${{ parameters.gemspecName }}.gemspec-pipeline'
+    inputs:
+      root: ${{ parameters.workingDirectory }}
+      tokenPattern: azpipelines
+      sources: '${{ parameters.gemspecName }}.gemspec-pipeline'
+      ifNoFilesFound: error
+      logLevel: warn
+      missingVarLog: error
+      additionalVariables: |
+        package_version: "${{ parameters.gemVersion }}"
+
+  - script: |
+      mv ${{ parameters.gemspecName }}.gemspec-pipeline ${{ parameters.gemspecName }}.gemspec
+      ${{ parameters.inlineScript }}
+    displayName: Prepare gemspec
+    workingDirectory: ${{ parameters.workingDirectory }}
